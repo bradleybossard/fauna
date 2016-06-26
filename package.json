@@ -1,0 +1,19 @@
+{
+  "name": "fauna",
+  "version": "0.1.0",
+  "description": "NPM library for generating and rendering L-Systems",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bradleybossard/fauna.git"
+  },
+  "author": "Bradley Bossard <bradleybossard@gmail.com> (http://bradleybossard.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bradleybossard/fauna/issues"
+  },
+  "homepage": "https://github.com/bradleybossard/fauna#readme"
+}

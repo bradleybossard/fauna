@@ -1,8 +1,8 @@
 {
   "name": "fauna",
   "version": "0.1.0",
-  "description": "NPM library for generating and rendering L-Systems",
-  "main": "index.js",
+  "description": "Generate and render animated L-Systems",
+  "main": "src/index.js",
   "scripts": {
     "test": "mocha src/*.spec.js -w"
   },

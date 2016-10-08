@@ -1,5 +1,9 @@
 var expect = require('chai').expect;
+var fauna = require('./index.js');
 
 describe('iterate test', function() {
-  expect(0).to.be.equal(0);
+  it('simple iteration', function() {
+    const expandedString = fauna.iterate('a', {'a': 'bab'}, 2);
+    expect(expandedString).to.be.equal('bbabb');
+  });
 });

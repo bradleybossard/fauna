@@ -18,6 +18,7 @@
   "homepage": "https://github.com/bradleybossard/fauna#readme",
   "devDependencies": {
     "chai": "^3.5.0",
-    "mocha": "^2.5.3"
+    "mocha": "^2.5.3",
+    "semantic-release": "^4.3.5"
   }
 }

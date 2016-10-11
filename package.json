@@ -1,10 +1,11 @@
 {
   "name": "fauna",
-  "version": "0.2.0",
+  "version": "0.0.0-semantic-release",
   "description": "Generate and render animated L-Systems",
   "main": "src/index.js",
   "scripts": {
-    "test": "mocha src/*.spec.js -w"
+    "test": "mocha src/*.spec.js -w",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "repository": {
     "type": "git",

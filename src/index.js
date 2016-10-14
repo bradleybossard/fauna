@@ -11,13 +11,12 @@ exports.toCommands = function(length, alpha, lengthGrowth, alphaGrowth, stream) 
   let point = {'x': 0, 'y': 0}; 
   let angle = -90;
   let pathLength = 0;
-  let stack = [];
+  let lineLength = length;
   let tempStack = [];
+  let stack = [{'c': 'M', 'x': 0, 'y': 0}];
 
-  stack.push({'c': 'M', 'x': 0, 'y': 0});
-
-  for (var c in stream) {
-    switch(stream[c]) {
+  for(var i = 0, c =''; c = stream.charAt(i); i++){
+    switch(c) {
       case '(':
         alpha *= 1 - angleGrowth;
         break;
@@ -56,11 +55,21 @@ exports.toCommands = function(length, alpha, lengthGrowth, alphaGrowth, stream) 
         angle += 180;
         break;
     }
-    return stack;
   }
+  return stack;
 }
 
 exports.toPaths = function(stack) {
+  const xml = require('xml');
+ 
+  function pathString(stack) {
+    let path = [];
+    stack.forEach(function(p) {
+      path.push(`${p.c} ${p.x} ${p.y}`);
+    });
+    return path.join(' ');
+  }
 
+  return pathString(stack);
 }
 

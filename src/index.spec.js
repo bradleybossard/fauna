@@ -15,8 +15,11 @@ describe('iterate test', function() {
 
 describe('toCommand test', function() {
   it('covert stream', function() {
-    //const expandedString = fauna.iterate('a', {'a': 'bab'}, 2);
-    //expect(expandedString).to.be.equal('bbabb');
-    const commands = fauna.toCommands(1, 30, 0.1, 0.1, 'bbabb');
-  });
+    const expected = [{ c: 'M', x: 0, y: 0 },
+											{ c: 'l', x: 0, y: 0 },
+											{ c: 'l', x: 0, y: 0 },
+											{ c: 'l', x: 0, y: 0 }];
+    const commands = fauna.toCommands(1, 30, 0.1, 0.1, 'LFLR+FLFLR+R+');
+    expect(commands).to.be.deep.equal(expected);
+	});
 });

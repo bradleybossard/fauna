@@ -3,6 +3,7 @@ const rewire = require('rewire');
 const fauna = rewire('./index.js');
 
 const pathString = fauna.__get__('pathString');
+const boundingBox = fauna.__get__('boundingBox');
 
 describe('iterate test', function() {
   it('simple iteration', function(done) {
@@ -18,7 +19,7 @@ describe('iterate test', function() {
   });
 });
 
-describe('toCommand test', function() {
+describe('toCommands test', function() {
   it('covert stream', function(done) {
     const expected = [{ c: 'M', x: 0, y: 0 },
 											{ c: 'l', x: 0, y: 0 },
@@ -30,8 +31,8 @@ describe('toCommand test', function() {
 	});
 });
 
-describe('toCommand test', function() {
-  it('covert stream', function(done) {
+describe('pathString test', function() {
+  it('should compose the pathString', function(done) {
     const stack = [{ c: 'M', x: 0, y: 0 },
 							 		 { c: 'l', x: 0, y: 0 },
 								 	 { c: 'l', x: 0, y: 0 },
@@ -42,6 +43,20 @@ describe('toCommand test', function() {
 		done();
 	});
 });
+
+describe('boundingBox test', function() {
+  it('should calculate the bounding box properly', function(done) {
+    const stack = [{ c: 'M', x: -4, y: 0 },
+							 		 { c: 'M', x: 0, y: -4 },
+								 	 { c: 'M', x: 4, y: 0 },
+									 { c: 'M', x: 0, y: 4 }];
+    const expected = {'minX': -4, 'minY': -4, 'maxX': 4, 'maxY': 4};
+    const box = boundingBox(stack);
+    expect(box).to.be.deep.equal(expected);
+		done();
+	});
+});
+
 
 
 

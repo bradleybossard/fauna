@@ -1,3 +1,26 @@
+function pathString(stack) {
+	let path = [];
+	stack.forEach(function(p) {
+		path.push(`${p.c} ${p.x} ${p.y}`);
+	});
+	return path.join(' ');
+}
+
+function boundingBox(stack) {
+	let x = y = 0;
+	let minX = minY = Infinity;
+	let maxX = maxY = -Infinity;
+	stack.forEach(function(p) {
+		x = (p.c === 'M') ? p.x : x + p.x;
+		y = (p.c === 'M') ? p.y : x + p.y;
+		minX = Math.min(minX, x);
+		minY = Math.min(minY, y);
+		maxX = Math.max(maxX, x);
+		maxY = Math.max(maxY, y);
+	});
+	return {'minX': minX, 'minY': minY, 'maxX': maxX, 'maxY': maxY};
+}
+
 exports.iterate = function(axiom, rules, iterations) {
   for (var i = 0; i < iterations; i++) {
     axiom = axiom.replace(/\w/g, function(c) {
@@ -62,14 +85,6 @@ exports.toCommands = function(length, alpha, lengthGrowth, alphaGrowth, stream) 
 exports.toPaths = function(stack) {
   const xml = require('xml');
  
-  function pathString(stack) {
-    let path = [];
-    stack.forEach(function(p) {
-      path.push(`${p.c} ${p.x} ${p.y}`);
-    });
-    return path.join(' ');
-  }
-
   return pathString(stack);
 }
 

@@ -1,5 +1,8 @@
-var expect = require('chai').expect;
-var fauna = require('./index.js');
+const expect = require('chai').expect;
+const rewire = require('rewire');
+const fauna = rewire('./index.js');
+
+const pathString = fauna.__get__('pathString');
 
 describe('iterate test', function() {
   it('simple iteration', function(done) {
@@ -34,8 +37,11 @@ describe('toCommand test', function() {
 								 	 { c: 'l', x: 0, y: 0 },
 									 { c: 'l', x: 0, y: 0 }];
     const expected = 'M 0 0 l 0 0 l 0 0 l 0 0';
-    const path = fauna.toPaths(stack);
+    const path = pathString(stack);
     expect(path).to.be.equal(expected);
 		done();
 	});
 });
+
+
+

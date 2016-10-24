@@ -4,6 +4,7 @@ const fauna = rewire('./index.js');
 
 const pathString = fauna.__get__('pathString');
 const boundingBox = fauna.__get__('boundingBox');
+const animateElement = fauna.__get__('animateElement');
 
 describe('iterate test', function() {
   it('simple iteration', function(done) {
@@ -57,6 +58,17 @@ describe('boundingBox test', function() {
 	});
 });
 
+describe('animationElement test', function() {
+  it('should produce an animate xml element properly', function(done) {
+    const fromPath = '1 2 1';
+    const toPath = '3 4 3';
+    const duration = 20;
+    const expected = '<animate attributeName="d" begin="0s" dur="20" values="1 2 1;3 4 3;1 2 1;" repeatCount="indefinite"/>';
+    const el = animateElement(fromPath, toPath, duration);
+    expect(el).to.be.equal(expected);
+    done();
+  });
+});
 
 
 

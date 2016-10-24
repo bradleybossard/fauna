@@ -1,3 +1,5 @@
+const xml = require('xml');
+
 function pathString(stack) {
 	let path = [];
 	stack.forEach(function(p) {
@@ -21,8 +23,21 @@ function boundingBox(stack) {
 	return {'minX': minX, 'minY': minY, 'maxX': maxX, 'maxY': maxY};
 }
 
+function animateElement(fromPath, toPath, duration) {
+  const valuesPath = `${fromPath};${toPath};${fromPath};`;
+  let elem = [{animate: {_attr:{
+    attributeName: 'd',
+    begin: '0s',
+    dur: duration,
+    values: valuesPath,
+    repeatCount: 'indefinite'
+  }}}];
+
+ return xml(elem);
+}
+
 exports.iterate = function(axiom, rules, iterations) {
-  for (var i = 0; i < iterations; i++) {
+  for (let i = 0; i < iterations; i++) {
     axiom = axiom.replace(/\w/g, function(c) {
       return rules[c] || c;
     });
@@ -38,7 +53,7 @@ exports.toCommands = function(length, alpha, lengthGrowth, alphaGrowth, stream) 
   let tempStack = [];
   let stack = [{'c': 'M', 'x': 0, 'y': 0}];
 
-  for(var i = 0, c =''; c = stream.charAt(i); i++){
+  for(let i = 0, c =''; c = stream.charAt(i); i++){
     switch(c) {
       case '(':
         alpha *= 1 - angleGrowth;
@@ -83,7 +98,7 @@ exports.toCommands = function(length, alpha, lengthGrowth, alphaGrowth, stream) 
 }
 
 exports.toPaths = function(stack) {
-  const xml = require('xml');
+
  
   return pathString(stack);
 }

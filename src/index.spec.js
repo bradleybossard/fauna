@@ -1,10 +1,12 @@
 const expect = require('chai').expect;
 const rewire = require('rewire');
 const fauna = rewire('./index.js');
+//const util = require('util');
 
 const pathString = fauna.__get__('pathString');
 const boundingBox = fauna.__get__('boundingBox');
 const animateElement = fauna.__get__('animateElement');
+const pathElement = fauna.__get__('pathElement');
 
 describe('iterate test', function() {
   it('simple iteration', function(done) {
@@ -63,12 +65,39 @@ describe('animationElement test', function() {
     const fromPath = '1 2 1';
     const toPath = '3 4 3';
     const duration = 20;
-    const expected = '<animate attributeName="d" begin="0s" dur="20" values="1 2 1;3 4 3;1 2 1;" repeatCount="indefinite"/>';
+    const expected = [{animate: {_attr:{
+			attributeName: 'd',
+      begin: '0s',
+      dur: 20,
+      values: '1 2 1;3 4 3;1 2 1;',
+      repeatCount: 'indefinite'
+    }}}];
     const el = animateElement(fromPath, toPath, duration);
-    expect(el).to.be.equal(expected);
+    expect(el).to.be.deep.equal(expected);
     done();
   });
 });
+
+describe('pathElement test', function() {
+  it('should produce an path xml element properly', function(done) {
+    const path = '1 2 1';
+    const name = 'pathname';
+    const minX = minY = -10;
+    const animateEls = [{animate: {_attr:{
+			attributeName: 'd',
+      begin: '0s',
+      dur: 20,
+      values: '1 2 1;3 4 3;1 2 1;',
+      repeatCount: 'indefinite'
+    }}}];
+    const expected = [ { path: { _attr: { d: '1 2 1', id: 'pathname', transform: 'translate(-10,-10)', class: 'aqua' } } }, { animate: { _attr: { attributeName: 'd', begin: '0s', dur: 20, values: '1 2 1;3 4 3;1 2 1;', repeatCount: 'indefinite' } } } ];
+    const el = pathElement(path, name, minX, minY, animateEls);
+    expect(el).to.be.deep.equal(expected);
+    done();
+  });
+});
+
+
 
 
 

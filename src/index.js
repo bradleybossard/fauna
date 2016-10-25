@@ -33,7 +33,22 @@ function animateElement(fromPath, toPath, duration) {
     repeatCount: 'indefinite'
   }}}];
 
- return xml(elem);
+ return elem;
+}
+
+function pathElement(path, name, minX, minY, animateEls) {
+  let elem = [{path: {_attr:{
+		d : path,
+    id: name,
+		transform: `translate(${minX},${minY})`,
+    class: 'aqua'
+  }}}];
+
+	animateEls.forEach(function(el) {
+    elem.push(el);
+	});
+
+  return elem;
 }
 
 exports.iterate = function(axiom, rules, iterations) {
@@ -53,7 +68,7 @@ exports.toCommands = function(length, alpha, lengthGrowth, alphaGrowth, stream) 
   let tempStack = [];
   let stack = [{'c': 'M', 'x': 0, 'y': 0}];
 
-  for(let i = 0, c =''; c = stream.charAt(i); i++){
+  for(let i = 0, c =''; c = stream.charAt(i); i++) {
     switch(c) {
       case '(':
         alpha *= 1 - angleGrowth;
@@ -98,8 +113,6 @@ exports.toCommands = function(length, alpha, lengthGrowth, alphaGrowth, stream) 
 }
 
 exports.toPaths = function(stack) {
-
- 
   return pathString(stack);
 }
 

@@ -23,6 +23,20 @@ function boundingBox(stack) {
 	return {'minX': minX, 'minY': minY, 'maxX': maxX, 'maxY': maxY};
 }
 
+function pathLength(stack) {
+  let length = 0.0;
+  let x = y = 0;
+  stack.forEach(function(p) {
+    if (p.c == 'l') {
+      let xDiff = p.x - x;
+      let yDiff = p.y - y;
+			length += Math.sqrt(Math.pow(xDiff, 2) + Math.pow(yDiff, 2));
+		}
+    ({x, y} = p);
+	});
+  return length;
+}
+
 function animateElement(fromPath, toPath, duration) {
   const valuesPath = `${fromPath};${toPath};${fromPath};`;
   let elem = [{animate: {_attr:{

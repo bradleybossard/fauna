@@ -7,6 +7,7 @@ const pathString = fauna.__get__('pathString');
 const boundingBox = fauna.__get__('boundingBox');
 const animateElement = fauna.__get__('animateElement');
 const pathElement = fauna.__get__('pathElement');
+const pathLength = fauna.__get__('pathLength');
 
 describe('iterate test', function() {
   it('simple iteration', function(done) {
@@ -97,7 +98,12 @@ describe('pathElement test', function() {
   });
 });
 
-
-
-
-
+describe('pathLength test', function() {
+  it('should calculate the length of a path', function(done) {
+		const stack = [{c: 'M', x:0, y:0}, {c: 'l', x:3, y:3}];
+		const expected = Math.sqrt(18);
+		const length = pathLength(stack);
+		expect(length).to.be.equal(expected);
+		done();
+  });
+});

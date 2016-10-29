@@ -67,6 +67,10 @@ function pathElement(path, name, minX, minY, animateEls) {
   return elem;
 }
 
+function shufflePath(stack) {
+  // TODO(bradleybossard) : Implment this function
+}
+
 function renderPath(stacks, pathName) {
   let animateEls = [];
   const fromStack = stacks[0];
@@ -81,6 +85,19 @@ function renderPath(stacks, pathName) {
 	}
   const pathSvg = pathElement(fromPath, pathName, box.xMin, box.minY, animateEls);
   return {path: pathSvg, box: box, length: fromLength};
+}
+
+function styleElement(props) {
+  let el = [{path: {_attr:{
+    'stroke': props.stroke,
+    'stroke-linecap': props['stroke-linecap'],
+    'stroke-linejoin': props['stroke-linejoin'],
+    'stroke-width': props['stroke-width'],
+    'stroke-opacity': props['stroke-opacity'],
+    'stroke-dasharray': props['stroke-dasharray'],
+    'stroke-dashoffset': props['stroke-dashoffset']
+  }}}];
+  return el;
 }
 
 exports.iterate = function(axiom, rules, iterations) {

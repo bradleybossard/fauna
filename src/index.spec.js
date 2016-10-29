@@ -1,7 +1,7 @@
 const expect = require('chai').expect;
 const rewire = require('rewire');
 const fauna = rewire('./index.js');
-//const util = require('util');
+const util = require('util');
 
 const pathString = fauna.__get__('pathString');
 const boundingBox = fauna.__get__('boundingBox');
@@ -9,6 +9,7 @@ const animateElement = fauna.__get__('animateElement');
 const pathElement = fauna.__get__('pathElement');
 const pathLength = fauna.__get__('pathLength');
 const renderPath = fauna.__get__('renderPath');
+const styleElement = fauna.__get__('styleElement');
 
 describe('iterate test', function() {
   it('simple iteration', function(done) {
@@ -127,4 +128,24 @@ describe('renderPath test', function() {
     done();
 	});
 });
+
+describe('styleElement test', function() {
+  it('should produce a style element correctly', function(done) {
+    const props = {
+			'stroke': '#FFF',
+			'stroke-linecap': 'butt',
+			'stroke-linejoin': 'miter',
+			'stroke-width': '1px',
+			'stroke-opacity': '1.0',
+			'stroke-dasharray': '20 20',
+			'stroke-dashoffset': '10.0',
+		};
+    const expected = [ { path: { _attr: { stroke: '#FFF', 'stroke-linecap': 'butt', 'stroke-linejoin': 'miter', 'stroke-width': '1px', 'stroke-opacity': '1.0', 'stroke-dasharray': '20 20', 'stroke-dashoffset': '10.0' } } } ]
+    const actual = styleElement(props);
+    //console.log(util.inspect(actual, false, null));
+    expect(actual).to.be.deep.equal(expected);
+    done();
+	});
+});
+
 

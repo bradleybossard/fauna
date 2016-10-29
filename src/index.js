@@ -67,6 +67,22 @@ function pathElement(path, name, minX, minY, animateEls) {
   return elem;
 }
 
+function renderPath(stacks, pathName) {
+  let animateEls = [];
+  const fromStack = stacks[0];
+  const box = boundingBox(stacks);
+  const fromPath = pathString(fromStack);
+  const fromLength = pathLength(fromStack); 
+
+  if (stacks.length > 1) {
+    const toStack = stacks[1];
+    const animateEl = animateElement(fromPath, toPath, 10); 
+    animateEls.push(animateEl);
+	}
+  const pathSvg = pathElement(fromPath, pathName, box.xMin, box.minY, animateEls);
+  return {path: pathSvg, box: box, length: fromLength};
+}
+
 exports.iterate = function(axiom, rules, iterations) {
   for (let i = 0; i < iterations; i++) {
     axiom = axiom.replace(/\w/g, function(c) {

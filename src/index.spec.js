@@ -8,6 +8,7 @@ const boundingBox = fauna.__get__('boundingBox');
 const animateElement = fauna.__get__('animateElement');
 const pathElement = fauna.__get__('pathElement');
 const pathLength = fauna.__get__('pathLength');
+const renderPath = fauna.__get__('renderPath');
 
 describe('iterate test', function() {
   it('simple iteration', function(done) {
@@ -112,3 +113,16 @@ describe('pathLength test', function() {
 		done();
   });
 });
+
+describe('renderPath test', function() {
+  it('should render path correctly', function(done) {
+    const pathName = 'test1';
+		const stack1 = [{c: 'M', x:0, y:0}, {c: 'l', x:3, y:3}];
+    const stacks = [stack1];
+    const expected = {path:[{path:{_attr:{d:"M 0 0 l 3 3",id:"test1",transform:"translate(undefined,0)",class:"aqua"}}}],box:{minX:0,minY:0,maxX:3,maxY:6},length:4.242640687119285};
+    const actual = renderPath(stacks, pathName);
+    expect(actual).to.be.deep.equal(expected);
+    done();
+	});
+});
+

@@ -50,12 +50,17 @@ describe('pathString test', function() {
 
 describe('boundingBox test', function() {
   it('should calculate the bounding box properly', function(done) {
-    const stack = [{ c: 'M', x: -4, y: 0 },
-							 		 { c: 'M', x: 0, y: -4 },
-								 	 { c: 'M', x: 4, y: 0 },
-									 { c: 'M', x: 0, y: 4 }];
-    const expected = {'minX': -4, 'minY': -4, 'maxX': 4, 'maxY': 4};
-    const box = boundingBox(stack);
+    const stack1 = [{ c: 'M', x: -4, y: 0 },
+							 	 	  { c: 'M', x: 0, y: -4 },
+								 	  { c: 'M', x: 4, y: 0 },
+									  { c: 'M', x: 0, y: 4 }];
+    const stack2 = [{ c: 'M', x: -8, y: 0 },
+							 		  { c: 'M', x: 0, y: -8 },
+								 	  { c: 'M', x: 0, y: 0 },
+									  { c: 'M', x: 0, y: 0 }];
+    const stacks = [stack1, stack2];
+    const expected = {'minX': -8, 'minY': -8, 'maxX': 4, 'maxY': 4};
+    const box = boundingBox(stacks);
     expect(box).to.be.deep.equal(expected);
 		done();
 	});

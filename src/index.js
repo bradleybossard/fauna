@@ -8,17 +8,19 @@ function pathString(stack) {
 	return path.join(' ');
 }
 
-function boundingBox(stack) {
+function boundingBox(stacks) {
 	let x = y = 0;
 	let minX = minY = Infinity;
 	let maxX = maxY = -Infinity;
-	stack.forEach(function(p) {
-		x = (p.c === 'M') ? p.x : x + p.x;
-		y = (p.c === 'M') ? p.y : x + p.y;
-		minX = Math.min(minX, x);
-		minY = Math.min(minY, y);
-		maxX = Math.max(maxX, x);
-		maxY = Math.max(maxY, y);
+	stacks.forEach(function(stack) {
+		stack.forEach(function(p) {
+			x = (p.c === 'M') ? p.x : x + p.x;
+			y = (p.c === 'M') ? p.y : x + p.y;
+			minX = Math.min(minX, x);
+			minY = Math.min(minY, y);
+			maxX = Math.max(maxX, x);
+			maxY = Math.max(maxY, y);
+		});
 	});
 	return {'minX': minX, 'minY': minY, 'maxX': maxX, 'maxY': maxY};
 }

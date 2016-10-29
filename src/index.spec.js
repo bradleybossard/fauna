@@ -12,14 +12,14 @@ const renderPath = fauna.__get__('renderPath');
 const styleElement = fauna.__get__('styleElement');
 
 describe('iterate test', function() {
-  it('simple iteration', function(done) {
+  it('should iterate properly 1', function(done) {
     const actual = fauna.iterate('L', {'L': 'LFLR+'}, 2);
     const expected = 'LFLR+FLFLR+R+';
     expect(actual).to.be.equal(expected);
 		done();
   });
 
-  it('simple iteration', function(done) {
+  it('should iterate properly 2', function(done) {
     const actual = fauna.iterate('a', {'a': 'bac', 'c': 'ddd'}, 4);
     const expected = 'bbbbacddddddddd';
     expect(actual).to.be.equal(expected);

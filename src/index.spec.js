@@ -12,14 +12,16 @@ const renderPath = fauna.__get__('renderPath');
 
 describe('iterate test', function() {
   it('simple iteration', function(done) {
-    const expandedString = fauna.iterate('L', {'L': 'LFLR+'}, 2);
-    expect(expandedString).to.be.equal('LFLR+FLFLR+R+');
+    const actual = fauna.iterate('L', {'L': 'LFLR+'}, 2);
+    const expected = 'LFLR+FLFLR+R+';
+    expect(actual).to.be.equal(expected);
 		done();
   });
 
   it('simple iteration', function(done) {
-    const expandedString = fauna.iterate('a', {'a': 'bac', 'c': 'ddd'}, 4);
-    expect(expandedString).to.be.equal('bbbbacddddddddd');
+    const actual = fauna.iterate('a', {'a': 'bac', 'c': 'ddd'}, 4);
+    const expected = 'bbbbacddddddddd';
+    expect(actual).to.be.equal(expected);
 		done();
   });
 });
@@ -30,8 +32,8 @@ describe('toCommands test', function() {
 											{ c: 'l', x: 0, y: 0 },
 											{ c: 'l', x: 0, y: 0 },
 											{ c: 'l', x: 0, y: 0 }];
-    const commands = fauna.toCommands(1, 30, 0.1, 0.1, 'LFLR+FLFLR+R+');
-    expect(commands).to.be.deep.equal(expected);
+    const actual = fauna.toCommands(1, 30, 0.1, 0.1, 'LFLR+FLFLR+R+');
+    expect(actual).to.be.deep.equal(expected);
 		done();
 	});
 });
@@ -43,8 +45,8 @@ describe('pathString test', function() {
 								 	 { c: 'l', x: 0, y: 0 },
 									 { c: 'l', x: 0, y: 0 }];
     const expected = 'M 0 0 l 0 0 l 0 0 l 0 0';
-    const path = pathString(stack);
-    expect(path).to.be.equal(expected);
+    const actual = pathString(stack);
+    expect(actual).to.be.equal(expected);
 		done();
 	});
 });
@@ -61,8 +63,8 @@ describe('boundingBox test', function() {
 									  { c: 'M', x: 0, y: 0 }];
     const stacks = [stack1, stack2];
     const expected = {'minX': -8, 'minY': -8, 'maxX': 4, 'maxY': 4};
-    const box = boundingBox(stacks);
-    expect(box).to.be.deep.equal(expected);
+    const actual = boundingBox(stacks);
+    expect(actual).to.be.deep.equal(expected);
 		done();
 	});
 });
@@ -79,8 +81,8 @@ describe('animationElement test', function() {
       values: '1 2 1;3 4 3;1 2 1;',
       repeatCount: 'indefinite'
     }}}];
-    const el = animateElement(fromPath, toPath, duration);
-    expect(el).to.be.deep.equal(expected);
+    const actual = animateElement(fromPath, toPath, duration);
+    expect(actual).to.be.deep.equal(expected);
     done();
   });
 });
@@ -98,8 +100,8 @@ describe('pathElement test', function() {
       repeatCount: 'indefinite'
     }}}];
     const expected = [ { path: { _attr: { d: '1 2 1', id: 'pathname', transform: 'translate(-10,-10)', class: 'aqua' } } }, { animate: { _attr: { attributeName: 'd', begin: '0s', dur: 20, values: '1 2 1;3 4 3;1 2 1;', repeatCount: 'indefinite' } } } ];
-    const el = pathElement(path, name, minX, minY, animateEls);
-    expect(el).to.be.deep.equal(expected);
+    const actual = pathElement(path, name, minX, minY, animateEls);
+    expect(actual).to.be.deep.equal(expected);
     done();
   });
 });
@@ -108,8 +110,8 @@ describe('pathLength test', function() {
   it('should calculate the length of a path', function(done) {
 		const stack = [{c: 'M', x:0, y:0}, {c: 'l', x:3, y:3}];
 		const expected = Math.sqrt(18);
-		const length = pathLength(stack);
-		expect(length).to.be.equal(expected);
+		const actual = pathLength(stack);
+		expect(actual).to.be.equal(expected);
 		done();
   });
 });

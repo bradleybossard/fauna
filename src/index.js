@@ -15,7 +15,7 @@ function boundingBox(stacks) {
 	stacks.forEach(function(stack) {
 		stack.forEach(function(p) {
 			x = (p.c === 'M') ? p.x : x + p.x;
-			y = (p.c === 'M') ? p.y : x + p.y;
+			y = (p.c === 'M') ? p.y : y + p.y;
 			minX = Math.min(minX, x);
 			minY = Math.min(minY, y);
 			maxX = Math.max(maxX, x);
@@ -41,30 +41,31 @@ function pathLength(stack) {
 
 function animateElement(fromPath, toPath, duration) {
   const valuesPath = `${fromPath};${toPath};${fromPath};`;
-  let elem = [{animate: {_attr:{
+  return [{animate: {_attr:{
     attributeName: 'd',
     begin: '0s',
     dur: duration,
     values: valuesPath,
     repeatCount: 'indefinite'
   }}}];
-
- return elem;
 }
 
 function pathElement(path, name, minX, minY, animateEls) {
-  let elem = [{path: {_attr:{
+  const attrs =  {
 		d : path,
     id: name,
-		transform: `translate(${minX},${minY})`,
-    class: 'aqua'
-  }}}];
+		transform: `translate(${-minX},${-minY})`,
+    class: name 
+  };
+  let root = [
+    {_attr: attrs},
+  ];
 
 	animateEls.forEach(function(el) {
-    elem.push(el);
+    root.push({'animate': el});
 	});
 
-  return elem;
+  return root;
 }
 
 function shufflePath(stack) {
@@ -83,21 +84,20 @@ function renderPath(stacks, pathName) {
     const animateEl = animateElement(fromPath, toPath, 10); 
     animateEls.push(animateEl);
 	}
-  const pathSvg = pathElement(fromPath, pathName, box.xMin, box.minY, animateEls);
+  const pathSvg = pathElement(fromPath, pathName, box.minX, box.minY, animateEls);
   return {path: pathSvg, box: box, length: fromLength};
 }
 
-function styleElement(props) {
-  let el = [{path: {_attr:{
-    'stroke': props.stroke,
-    'stroke-linecap': props['stroke-linecap'],
-    'stroke-linejoin': props['stroke-linejoin'],
-    'stroke-width': props['stroke-width'],
-    'stroke-opacity': props['stroke-opacity'],
-    'stroke-dasharray': props['stroke-dasharray'],
-    'stroke-dashoffset': props['stroke-dashoffset']
-  }}}];
-  return el;
+function styleElement(props, pathName) {
+  return `.${pathName} {
+    stroke: ${props.stroke};
+    stroke-linecap: ${props['stroke-linecap']};
+    stroke-linejoin: ${props['stroke-linejoin']};
+    stroke-width: ${props['stroke-width']};
+    stroke-opacity: ${props['stroke-opacity']};
+    stroke-dasharray: ${props['stroke-dasharray']};
+    stroke-dashoffset: ${props['stroke-dashoffset']};
+  }`;
 }
 
 exports.iterate = function(axiom, rules, iterations) {
@@ -132,9 +132,11 @@ exports.toCommands = function(length, alpha, lengthGrowth, alphaGrowth, stream) 
         lineLength *= 1 + lengthGrowth;
         break;
       case 'F':
-        const deltaX = lineLength * Math.cos(Math.PI / 180 * angle)
-        const deltaY = lineLength * Math.sin(Math.PI / 180 * angle)
-        stack.push({'c': 'l', 'x': 0, 'y': 0});
+        let deltaX = lineLength * Math.cos(Math.PI / 180 * angle)
+        let deltaY = lineLength * Math.sin(Math.PI / 180 * angle)
+        deltaX = Math.abs(deltaX) < 0.000001 ? 0 : deltaX;
+        deltaY = Math.abs(deltaY) < 0.000001 ? 0 : deltaY;
+        stack.push({'c': 'l', 'x': deltaX, 'y': deltaY});
         point.x += deltaX;
         point.y += deltaY;
         break;
@@ -148,7 +150,8 @@ exports.toCommands = function(length, alpha, lengthGrowth, alphaGrowth, stream) 
         tempStack.push({'angle': angle, 'point': point, 'alpha': alpha});
         break;
       case ']':
-        angle, point, alpha = tempStack.pop()
+        ({angle, point, alpha} = tempStack.pop());
+        stack.push({'c': 'M', 'x': point.x, 'y': point.y});
         break;
       case '!':
         angle *= -1.0;
@@ -161,7 +164,40 @@ exports.toCommands = function(length, alpha, lengthGrowth, alphaGrowth, stream) 
   return stack;
 }
 
-exports.toPaths = function(stack) {
-  return pathString(stack);
+exports.toSvg = function(stacks, pathName, props) {
+  const path = renderPath(stacks, pathName);
+  const style = styleElement(props, pathName);
+  const svgWidth = path.box.maxX - path.box.minX;
+  const svgHeight = path.box.maxY - path.box.minY;
+
+  const attrs = {
+    'viewBox': `0 0 ${svgWidth} ${svgHeight}`,
+    'width': svgWidth,
+    'height': svgHeight,
+    'xmlns:cc': 'http://creativecommons.org/ns#',
+    'xmlns:dc': 'http://purl.org/dc/elements/1.1',
+    'xmlns:rdf': 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
+    'xmlns:svg': 'http://www.w3.org/2000/svg',
+		'xmlns:xlink' : 'http://www.w3.org/1999/xlink',
+    'xmlns': 'http://www.w3.org/2000/svg',
+	};
+
+  const use = {'_attr': {
+    'x': 0,
+    'y': 0,
+    'class': pathName,
+    'xlink:href': '#' + pathName
+	}};
+
+  const defs = [{path: path.path}];
+
+  let root = [{svg: [
+    {_attr: attrs},
+    {style: style},
+    {use: use},
+    {defs: defs}
+  ]}];
+
+  return xml(root);
 }
 

@@ -2,6 +2,7 @@ const expect = require('chai').expect;
 const rewire = require('rewire');
 const fauna = rewire('./index.js');
 const util = require('util');
+const fs = require('fs');
 
 const pathString = fauna.__get__('pathString');
 const boundingBox = fauna.__get__('boundingBox');
@@ -130,7 +131,7 @@ describe('renderPath test', function() {
 });
 
 describe('styleElement test', function() {
-  it('should produce a style element correctly', function(done) {
+  it('should produce style element correctly', function(done) {
     const props = {
 			'stroke': '#FFF',
 			'stroke-linecap': 'butt',
@@ -140,7 +141,7 @@ describe('styleElement test', function() {
 			'stroke-dasharray': '20 20',
 			'stroke-dashoffset': '10.0',
 		};
-    const expected = [ { path: { _attr: { stroke: '#FFF', 'stroke-linecap': 'butt', 'stroke-linejoin': 'miter', 'stroke-width': '1px', 'stroke-opacity': '1.0', 'stroke-dasharray': '20 20', 'stroke-dashoffset': '10.0' } } } ]
+    const expected = {_attr:{stroke:'#FFF','stroke-linecap':'butt', 'stroke-linejoin':'miter','stroke-width':'1px','stroke-opacity':'1.0','stroke-dasharray':'20 20','stroke-dashoffset':'10.0'}};
     const actual = styleElement(props);
     //console.log(util.inspect(actual, false, null));
     expect(actual).to.be.deep.equal(expected);
@@ -148,4 +149,39 @@ describe('styleElement test', function() {
 	});
 });
 
+describe.only('toSvg test', function() {
+  it('should produce an SVG', function(done) {
+    const props = {
+			'stroke': '#000',
+			'stroke-linecap': 'butt',
+			'stroke-linejoin': 'miter',
+			'stroke-width': '1px',
+			'stroke-opacity': '1.0',
+			'stroke-dasharray': '20 20',
+			'stroke-dashoffset': '10.0',
+		};
+    const iterations = 2;
+    const axiom = 'L';
+    const rules = {
+			"L": "c+R[]F-L[]FL-FR+",
+			"R": "-LF+RFR+FL-"
+    };
+    const length = 5;
+    const alpha = 90;
+    const lengthGrowth = 0;
+    const alphaGrowth = 0;
+    const pathName = 'path1';
+    const stream = fauna.iterate(axiom, rules, iterations);
+    let stacks = [];
+    const stack = fauna.toCommands(length, alpha, lengthGrowth, alphaGrowth, stream); 
+    stacks.push(stack);
+    const svg = fauna.toSvg(stacks, pathName, props); 
+    fs.writeFile('hilbert.svg', svg, function(err) {
+    if(err) {
+        throw err;
+      }
+    });
+    done();
+  });
+});
 

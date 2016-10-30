@@ -101,8 +101,9 @@ describe('pathElement test', function() {
       values: '1 2 1;3 4 3;1 2 1;',
       repeatCount: 'indefinite'
     }}}];
-    const expected = [ { path: { _attr: { d: '1 2 1', id: 'pathname', transform: 'translate(-10,-10)', class: 'aqua' } } }, { animate: { _attr: { attributeName: 'd', begin: '0s', dur: 20, values: '1 2 1;3 4 3;1 2 1;', repeatCount: 'indefinite' } } } ];
+    const expected = [ { _attr: { d: '1 2 1', id: 'pathname', transform: 'translate(10,10)', class: 'pathname' } }, { animate: { animate: { _attr: { attributeName: 'd', begin: '0s', dur: 20, values: '1 2 1;3 4 3;1 2 1;', repeatCount: 'indefinite' } } } } ];
     const actual = pathElement(path, name, minX, minY, animateEls);
+    //console.log(util.inspect(actual, false, null));
     expect(actual).to.be.deep.equal(expected);
     done();
   });
@@ -118,7 +119,7 @@ describe('pathLength test', function() {
   });
 });
 
-describe.only('renderPath test', function() {
+describe('renderPath test', function() {
   it('should render path correctly', function(done) {
     const pathName = 'test1';
 		const stack1 = [{c: 'M', x:0, y:0}, {c: 'l', x:3, y:3}];

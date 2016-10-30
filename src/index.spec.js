@@ -130,7 +130,7 @@ describe('renderPath test', function() {
 	});
 });
 
-describe('styleElement test', function() {
+describe.only('styleElement test', function() {
   it('should produce style element correctly', function(done) {
     const props = {
 			'stroke': '#FFF',
@@ -141,14 +141,15 @@ describe('styleElement test', function() {
 			'stroke-dasharray': '20 20',
 			'stroke-dashoffset': '10.0',
 		};
-    const expected = {_attr:{stroke:'#FFF','stroke-linecap':'butt', 'stroke-linejoin':'miter','stroke-width':'1px','stroke-opacity':'1.0','stroke-dasharray':'20 20','stroke-dashoffset':'10.0'}};
-    const actual = styleElement(props);
-    //console.log(util.inspect(actual, false, null));
+    const pathName = 'test1';
+    const expected = '.test1 {\n    stroke: #FFF;\n    stroke-linecap: butt;\n    stroke-linejoin: miter;\n    stroke-width: 1px;\n    stroke-opacity: 1.0;\n    stroke-dasharray: 20 20;\n    stroke-dashoffset: 10.0;\n  }';
+    const actual = styleElement(props, pathName);
     expect(actual).to.be.deep.equal(expected);
     done();
 	});
 });
 
+/*
 describe('toSvg test', function() {
   it('should produce an SVG', function(done) {
     const props = {
@@ -184,4 +185,4 @@ describe('toSvg test', function() {
     done();
   });
 });
-
+*/

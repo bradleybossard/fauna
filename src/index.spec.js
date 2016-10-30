@@ -30,11 +30,11 @@ describe('iterate test', function() {
 
 describe('toCommands test', function() {
   it('covert stream', function(done) {
-    const expected = [{ c: 'M', x: 0, y: 0 },
-											{ c: 'l', x: 0, y: 0 },
-											{ c: 'l', x: 0, y: 0 },
-											{ c: 'l', x: 0, y: 0 }];
-    const actual = fauna.toCommands(1, 30, 0.1, 0.1, 'LFLR+FLFLR+R+');
+    const expected = [ { c: 'M', x: 0, y: 0 },
+                       { c: 'l', x: 0, y: -1 },
+                       { c: 'l', x: 1, y: 0 },
+                       { c: 'l', x: 1, y: 0 } ];
+    const actual = fauna.toCommands(1, 90, 0.1, 0.1, 'LFLR+FLFLR+R+');
     expect(actual).to.be.deep.equal(expected);
 		done();
 	});
@@ -149,7 +149,7 @@ describe('styleElement test', function() {
 	});
 });
 
-describe.only('toSvg test', function() {
+describe('toSvg test', function() {
   it('should produce an SVG', function(done) {
     const props = {
 			'stroke': '#000',

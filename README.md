@@ -21,3 +21,7 @@ Javascript library for generating L-Systems
 
     
 TODO: Test `git tag -a <semver> -m "my version 1.4"` to test if it creates the release message in Github
+- [ ] Add function to ingest and run config
+- [ ] Documentation
+- [ ] Landing page
+- [ ] Finished egghead.io publishing guide

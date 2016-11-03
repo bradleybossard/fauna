@@ -178,13 +178,30 @@ describe('toSvg test', function() {
     let stacks = [];
     const stack = fauna.toCommands(length, alpha, lengthGrowth, alphaGrowth, stream); 
     stacks.push(stack);
-    const svg = fauna.toSvg(stacks, pathName, props); 
-    fs.writeFile('hilbert.svg', svg, function(err) {
+    //console.log(util.inspect(stacks));
+    let stacksString = JSON.stringify(stacks);
+    let propsString = JSON.stringify(props);
+    //const svg = fauna.toSvg(stacks, pathName, props); 
+    //fs.writeFile('hilbert.svg', svg, function(err) {
+    fs.writeFile('src/testdata/expected.svg', svg, function(err) {
+    //fs.writeFile('src/testdata/stacks.json', stacksString, function(err) {
+    fs.writeFile('src/testdata/props.json', propsString, function(err) {
     if(err) {
         throw err;
       }
     });
     done();
   });
-});
 */
+
+describe('toSvg test', function() {
+  it('should produce an SVG', function(done) {
+    const pathName = 'path1';
+		const props = JSON.parse(fs.readFileSync('./src/testdata/props.json', 'utf8'));
+		const stacks = JSON.parse(fs.readFileSync('./src/testdata/stacks.json', 'utf8'));
+		const expected = fs.readFileSync('./src/testdata/expected.svg', 'utf8');
+    const actual = fauna.toSvg(stacks, pathName, props); 
+    expect(actual).to.be.equal(expected);
+    done();
+  });
+});

@@ -1,0 +1,9 @@
+<svg viewBox="0 0 15 15" width="15" height="15" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg"><style>.path1 {
+    stroke: #000;
+    stroke-linecap: butt;
+    stroke-linejoin: miter;
+    stroke-width: 1px;
+    stroke-opacity: 1.0;
+    stroke-dasharray: 20 20;
+    stroke-dashoffset: 10.0;
+  }</style><use x="0" y="0" class="path1" xlink:href="#path1"/><defs><path d="M 0 0 l 0 -5 l 5 0 l 0 5 M 5 0 l 5 0 M 10 0 l 5 0 M 15 0 l 0 -5 l -5 0 M 10 -5 l 0 -5 M 10 -10 l 5 0 M 15 -10 l 0 -5 l -5 0 l -5 0 l 0 5 l -5 0 l 0 -5" id="path1" transform="translate(0,15)" class="path1"></path></defs></svg>

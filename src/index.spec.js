@@ -169,13 +169,6 @@ describe('runConfig test', function() {
 		const expected = fs.readFileSync('./src/testdata/hilbert-expected.svg', 'utf8');
     const actual = fauna.runConfig(config);
     expect(actual).to.be.equal(expected);
-/*
-		fs.writeFile('hilbert.svg', actual, function(err) {
-			if(err) {
-				throw err;
-			}
-		});
-*/
     done();
   });
 });

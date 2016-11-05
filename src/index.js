@@ -1,5 +1,7 @@
 const xml = require('xml');
 
+// Takes an array of commands (stack) and returns a corresponding
+// svg path string.
 function pathString(stack) {
 	let path = [];
 	stack.forEach(function(p) {
@@ -8,6 +10,7 @@ function pathString(stack) {
 	return path.join(' ');
 }
 
+// Calculates the bounding box of an array of commands.
 function boundingBox(stacks) {
 	let x = y = 0;
 	let minX = minY = Infinity;
@@ -25,6 +28,8 @@ function boundingBox(stacks) {
 	return {'minX': minX, 'minY': minY, 'maxX': maxX, 'maxY': maxY};
 }
 
+// Calculates the overall length of array of commands.
+// TODO(bradleybossard) : Handle M's.
 function pathLength(stack) {
   let length = 0.0;
   let x = y = 0;
@@ -39,6 +44,7 @@ function pathLength(stack) {
   return length;
 }
 
+// Returns an object respresnting an svg <animate> element.
 function animateElement(fromPath, toPath, duration) {
   const valuesPath = `${fromPath};${toPath};${fromPath};`;
   return [{animate: {_attr:{
@@ -50,6 +56,7 @@ function animateElement(fromPath, toPath, duration) {
   }}}];
 }
 
+// Returns an object respresenting an svg <path> element.
 function pathElement(path, name, minX, minY, animateEls) {
   const attrs =  {
 		d : path,
@@ -68,10 +75,12 @@ function pathElement(path, name, minX, minY, animateEls) {
   return root;
 }
 
+// Shuffles a stack of commands.
 function shufflePath(stack) {
   // TODO(bradleybossard) : Implment this function
 }
 
+// Returns an object respresenting an svg <path> element.
 function renderPath(stacks, pathName) {
   let animateEls = [];
   const fromStack = stacks[0];
@@ -88,6 +97,7 @@ function renderPath(stacks, pathName) {
   return {path: pathSvg, box: box, length: fromLength};
 }
 
+// Returns an object respresenting an svg <style> element.
 function styleElement(props, pathName) {
   return `.${pathName} {
     stroke: ${props.stroke};
@@ -100,6 +110,7 @@ function styleElement(props, pathName) {
   }`;
 }
 
+// Generates the iterated rules string.
 exports.iterate = function(axiom, rules, iterations) {
   for (let i = 0; i < iterations; i++) {
     axiom = axiom.replace(/\w/g, function(c) {
@@ -109,6 +120,7 @@ exports.iterate = function(axiom, rules, iterations) {
   return axiom;
 }
 
+// Loops through iterated rules string to produce svg-like path commands.
 exports.toCommands = function(length, alpha, lengthGrowth, alphaGrowth, stream) {
   let point = {'x': 0, 'y': 0}; 
   let angle = -90;
@@ -164,6 +176,8 @@ exports.toCommands = function(length, alpha, lengthGrowth, alphaGrowth, stream) 
   return stack;
 }
 
+// Takes an array of command stacks, a name and style to create
+// a finished svg string.
 exports.toSvg = function(stacks, pathName, props) {
   const path = renderPath(stacks, pathName);
   const style = styleElement(props, pathName);
@@ -201,6 +215,7 @@ exports.toSvg = function(stacks, pathName, props) {
   return xml(root);
 }
 
+// Produces an svg based on a config file.
 exports.runConfig = function(config) {
   // TODO(bradleybossard): Validate fields of config
 

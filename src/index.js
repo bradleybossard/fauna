@@ -201,3 +201,15 @@ exports.toSvg = function(stacks, pathName, props) {
   return xml(root);
 }
 
+exports.runConfig = function(config) {
+  // TODO(bradleybossard): Validate fields of config
+
+  let stacks = [];
+  config.patterns.forEach(function(pattern) {
+    const stream = exports.iterate(pattern.axiom, pattern.rules, pattern.iterations);
+		const stack = exports.toCommands(pattern.length, pattern.alpha, pattern.lengthGrowth, pattern.alphaGrowth, stream); 
+		stacks.push(stack);
+	}); 
+
+  return exports.toSvg(stacks, config.meta.name, config.style);
+}

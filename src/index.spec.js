@@ -162,3 +162,20 @@ describe('toSvg test', function() {
     done();
   });
 });
+
+describe('runConfig test', function() {
+  it('should produce an SVG', function(done) {
+		const config = JSON.parse(fs.readFileSync('./configs/hilbert.json', 'utf8'));
+		const expected = fs.readFileSync('./src/testdata/hilbert-expected.svg', 'utf8');
+    const actual = fauna.runConfig(config);
+    expect(actual).to.be.equal(expected);
+/*
+		fs.writeFile('hilbert.svg', actual, function(err) {
+			if(err) {
+				throw err;
+			}
+		});
+*/
+    done();
+  });
+});

@@ -76,13 +76,13 @@ describe('animationElement test', function() {
     const fromPath = '1 2 1';
     const toPath = '3 4 3';
     const duration = 20;
-    const expected = [{animate: {_attr:{
+    const expected = [{_attr:{
 			attributeName: 'd',
       begin: '0s',
-      dur: 20,
+      dur: '20s',
       values: '1 2 1;3 4 3;1 2 1;',
       repeatCount: 'indefinite'
-    }}}];
+    }}];
     const actual = animateElement(fromPath, toPath, duration);
     expect(actual).to.be.deep.equal(expected);
     done();

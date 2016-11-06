@@ -47,13 +47,13 @@ function pathLength(stack) {
 // Returns an object respresnting an svg <animate> element.
 function animateElement(fromPath, toPath, duration) {
   const valuesPath = `${fromPath};${toPath};${fromPath};`;
-  return [{animate: {_attr:{
+  return [{_attr:{
     attributeName: 'd',
     begin: '0s',
-    dur: duration,
-    values: valuesPath,
-    repeatCount: 'indefinite'
-  }}}];
+    dur: duration + 's',
+    repeatCount: 'indefinite',
+    values: valuesPath
+  }}];
 }
 
 // Returns an object respresenting an svg <path> element.
@@ -90,6 +90,7 @@ function renderPath(stacks, pathName) {
 
   if (stacks.length > 1) {
     const toStack = stacks[1];
+    const toPath = pathString(toStack);
     const animateEl = animateElement(fromPath, toPath, 10); 
     animateEls.push(animateEl);
 	}

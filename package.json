@@ -31,7 +31,7 @@
   },
   "config": {
     "ghooks": {
-      "pre-commit": "npm run test:single"
+      "pre-commit": "npm run test:single && npm run check-coverage"
     }
   },
   "scripts": {
@@ -39,6 +39,7 @@
     "test": "mocha src/*.spec.js -w",
     "test:single": "istanbul cover -x *.spec.js _mocha -- -R spec src/*.spec.js",
     "generate-testdata": "node src/util.js",
-    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post",
+    "check-coverage": "istanbul check-coverage --statements 70 --branches 70 --functions 70 --lines 70"
   }
 }

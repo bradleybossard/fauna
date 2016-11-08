@@ -1,10 +1,13 @@
 # fauna
 Javascript library for generating L-Systems
 
-[![Build Status][build]][link]
-[![semantic-release][semantic-image] ][semantic-url]
-[build]: https://travis-ci.org/bradleybossard/fauna.svg?branch=master
-[link]: https://travis-ci.org/bradleybossard/fauna
+[![build-image]][build-link]
+[![semantic-image] ][semantic-url]
+[![npm](https://img.shields.io/npm/v/npm.svg)](https://www.npmjs.com/package/fauna)
+
+
+[build-image]: https://travis-ci.org/bradleybossard/fauna.svg?branch=master
+[build-link]: https://travis-ci.org/bradleybossard/fauna
 [semantic-image]: https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg
 [semantic-url]: https://github.com/semantic-release/semantic-release
 

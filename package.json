@@ -14,7 +14,7 @@
   },
   "homepage": "https://github.com/bradleybossard/fauna#readme",
   "devDependencies": {
-    "babel": "^6.5.2",
+    "babel-cli": "^6.26.0",
     "babel-preset-es2015": "^6.18.0",
     "chai": "^3.5.0",
     "codecov.io": "^0.1.6",

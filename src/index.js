@@ -112,7 +112,7 @@ function styleElement(props, pathName) {
 }
 
 // Generates the iterated rules string.
-exports.iterate = function(axiom, rules, iterations) {
+const iterate = function(axiom, rules, iterations) {
   for (let i = 0; i < iterations; i++) {
     axiom = axiom.replace(/\w/g, function(c) {
       return rules[c] || c;
@@ -122,7 +122,7 @@ exports.iterate = function(axiom, rules, iterations) {
 }
 
 // Loops through iterated rules string to produce svg-like path commands.
-exports.toCommands = function(length, alpha, lengthGrowth, alphaGrowth, stream) {
+const toCommands = function(length, alpha, lengthGrowth, alphaGrowth, stream) {
   let point = {'x': 0, 'y': 0}; 
   let angle = -90;
   let pathLength = 0;
@@ -179,7 +179,7 @@ exports.toCommands = function(length, alpha, lengthGrowth, alphaGrowth, stream) 
 
 // Takes an array of command stacks, a name and style to create
 // a finished svg string.
-exports.toSvg = function(stacks, pathName, props) {
+const toSvg = function(stacks, pathName, props) {
   const path = renderPath(stacks, pathName);
   const style = styleElement(props, pathName);
   const svgWidth = path.box.maxX - path.box.minX;
@@ -217,15 +217,22 @@ exports.toSvg = function(stacks, pathName, props) {
 }
 
 // Produces an svg based on a config file.
-exports.runConfig = function(config) {
+const runConfig = function(config) {
   // TODO(bradleybossard): Validate fields of config
 
   let stacks = [];
   config.patterns.forEach(function(pattern) {
-    const stream = exports.iterate(pattern.axiom, pattern.rules, pattern.iterations);
-		const stack = exports.toCommands(pattern.length, pattern.alpha, pattern.lengthGrowth, pattern.alphaGrowth, stream); 
+    const stream = const iterate(pattern.axiom, pattern.rules, pattern.iterations);
+		const stack = const toCommands(pattern.length, pattern.alpha, pattern.lengthGrowth, pattern.alphaGrowth, stream); 
 		stacks.push(stack);
 	}); 
 
-  return exports.toSvg(stacks, config.meta.name, config.style);
+  return const toSvg(stacks, config.meta.name, config.style);
 }
+
+module.exports = Object.assign({}, {
+  runConfig,
+  iterate,
+  toCommands,
+  toSvg
+})

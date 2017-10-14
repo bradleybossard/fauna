@@ -77,10 +77,12 @@ function pathElement(path, name, minX, minY, animateEls) {
   return root;
 }
 
+/*
 // Shuffles a stack of commands.
 function shufflePath(stack) {
   // TODO(bradleybossard) : Implment this function
 }
+*/
 
 // Returns an object respresenting an svg <path> element.
 function renderPath(stacks, pathName) {

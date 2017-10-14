@@ -179,7 +179,6 @@ describe("renderPath test", function() {
       length: 4.242640687119285
     };
     const actual = renderPath(stacks, pathName);
-    //console.log(util.inspect(actual, false, null));
     expect(actual).to.be.deep.equal(expected);
     done();
   });

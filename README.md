@@ -28,3 +28,10 @@ TODO: Test `git tag -a <semver> -m "my version 1.4"` to test if it creates the r
 - [ ] Documentation
 - [ ] Landing page
 - [ ] Finished egghead.io publishing guide
+
+
+### Links for converting to webpack build
+
+[Authoring Libraries | webpack](https://webpack.js.org/guides/author-libraries/)
+
+[webpack-library-example/index.js at master · kalcifer/webpack-library-example](https://github.com/kalcifer/webpack-library-example/blob/master/index.js)

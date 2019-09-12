@@ -6,11 +6,19 @@ export default {
   entry: "./src/index",
   output: {
     path: join(__dirname, "dist"),
+    filename: 'fauna.js',
+    // globalObject: 'this',
     libraryTarget: "umd",
     library: "fauna"
   },
   devtool: "source-map",
   module: {
-    loaders: [{ test: /\.js$/, loader: "babel-loader", include }]
+    rules: [
+      {
+        test: /\.(js)$/,
+        exclude: /(node_modules|bower_components)/,
+        use: 'babel-loader'
+      }
+    ]
   }
 };

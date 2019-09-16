@@ -1,17 +1,14 @@
-import { join } from "path";
+const path = require('path');
 
-const include = join(__dirname, "src");
-
-export default {
-  entry: "./src/index",
+module.exports = {
+  mode: 'production',
+  entry: './src/index.js',
   output: {
-    path: join(__dirname, "dist"),
+    path: path.resolve(__dirname, './dist'),
     filename: 'fauna.js',
-    // globalObject: 'this',
-    libraryTarget: "umd",
-    library: "fauna"
+    libraryTarget: 'umd',
+    library: 'fauna'
   },
-  devtool: "source-map",
   module: {
     rules: [
       {

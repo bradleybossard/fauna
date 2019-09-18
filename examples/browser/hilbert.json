@@ -1,0 +1,29 @@
+{
+  "meta": {
+    "version": 1,
+    "name": "hilbert"
+  },
+  "patterns": [
+  {
+    "iterations": 5,
+    "axiom": "L",
+    "rules": {
+      "L": "c+R[]F-L[]FL-FR+",
+      "R": "-LF+RFR+FL-"
+    },
+    "alpha": 90,
+    "alphaGrowth": 0,
+    "length": 5,
+    "lengthGrowth": 0
+  }
+  ],
+  "style": {
+    "stroke": "#000",
+    "stroke-linecap": "butt",
+    "stroke-linejoin": "miter",
+    "stroke-width": "1px",
+    "stroke-opacity": "1.0",
+    "stroke-dasharray": "20 20",
+    "stroke-dashoffset": "10.0"
+  }
+}

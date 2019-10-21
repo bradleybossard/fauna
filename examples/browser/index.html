@@ -1,0 +1,21 @@
+<html>
+    <head>
+        <title>fauna browser example</title>
+    </head>
+    <body>
+        <div id='root'>
+        </div>
+        <script type='text/javascript' src='./fauna.js'></script>
+        <script type='text/javascript'>
+            fetch('hilbert.json')
+              .then(function(response) {
+                return response.json();
+              })
+              .then(function(config) {
+                const svg = fauna.runConfig(config);
+                document.getElementById('root').innerHTML = svg;
+              });
+
+        </script>
+    </body>
+</html>

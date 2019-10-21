@@ -1,14 +1,9 @@
 const xml = require("xml");
 
-// Takes an array of commands (stack) and returns a corresponding
-// svg path string.
-function pathString(stack) {
-  let path = [];
-  stack.forEach(function(p) {
-    path.push(`${p.c} ${p.x} ${p.y}`);
-  });
-  return path.join(" ");
-}
+// Converts points to path string
+const pathString = (stack) =>
+  stack.map(p => `${p.c} ${p.x} ${p.y}`)
+    .join(' ');
 
 // Calculates the bounding box of an array of commands.
 function boundingBox(stacks) {
@@ -25,7 +20,7 @@ function boundingBox(stacks) {
       maxY = Math.max(maxY, y);
     });
   });
-  return { minX: minX, minY: minY, maxX: maxX, maxY: maxY };
+  return { minX, minY, maxX, maxY };
 }
 
 // Calculates the overall length of array of commands.

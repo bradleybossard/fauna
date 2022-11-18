@@ -28,7 +28,7 @@
     "rewire": "^2.5.2",
     "semantic-release": "15.13.24",
     "webpack": "^4.4.1",
-    "webpack-cli": "3.3.8"
+    "webpack-cli": "3.3.12"
   },
   "czConfig": {
     "path": "node_modules/cz-conventional-changelog"
